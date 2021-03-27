@@ -73,18 +73,19 @@ const Wrapper = styled.div`
 `
 const SubmitBtn = styled.button`
   color: #fff;
-  background: #71b406;
+  font-weight: bold;
+  background: #ff0000;
   border-radius: 4px;
   padding: 12px;
   font-size: 18px;
   cursor: pointer;
   transition: ease-in-out 0.1s;
-  border: 1px solid #71b406;
+  border: 1px solid #ff0000;
   width: 100%;
   margin-top: 20px;
   &:hover {
-    background: #71b406;
-    border-color: #71b406;
+    background: #ff0000;
+    border-color: #ff0000;
   }
 `
 const Headline = styled.div`
@@ -128,7 +129,7 @@ const ReviewForm = (props) => {
             </RatingBox>
           </RatingContainer>
         </Field>
-        <SubmitBtn type="submit">Submit Your Review</SubmitBtn>
+        <SubmitBtn type="submit">Create Review</SubmitBtn>
       </form>
     </Wrapper>
   )
