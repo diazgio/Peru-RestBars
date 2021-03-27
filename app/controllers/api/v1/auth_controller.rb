@@ -1,6 +1,7 @@
 module Api
   module V1
     class AuthController < ApiController
+      include Authable
       include Resettable
       before_action :authenticate, only: %i[logout]
 

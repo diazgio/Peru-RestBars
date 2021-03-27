@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Header from './Header';
-import ReviewForm from './ReviewForm';
 import Review from './Review';
+import ReviewForm from './ReviewForm';
 import styled from 'styled-components';
 import AxiosWrapper from '../../utils/Requests/AxiosWrapper';
 
@@ -38,7 +38,7 @@ const Restaurant = (props) => {
   const [review, setReview] = useState({ title: '', description: '', score: 0 })
   const [error, setError] = useState('')
   const [loaded, setLoaded] = useState(false)
-  
+  console.log(reviews)
   useEffect(() => {
     const slug = props.match.params.slug
 
@@ -53,7 +53,7 @@ const Restaurant = (props) => {
 
   const handleChange = (e) => {
     setReview(Object.assign({}, review, {[e.target.name]: e.target.value}));
-  };
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -76,10 +76,10 @@ const Restaurant = (props) => {
       }
       setError(error)
     })
-  };
+  }
 
   const handleDestroy = (id, e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     AxiosWrapper.delete(`/api/v1/reviews/${id}`)
     .then( (data) => {
@@ -101,8 +101,8 @@ const Restaurant = (props) => {
   let userReviews
 
   if (reviews && reviews.length > 0) {
-    total = reviews.reduce((total, review) => total + review.attributes.score, 0)
-    average = total > 0 ? (parseFloat(total) / parseFloat(reviews.length)) : 0
+    total = reviews.reduce((total, review) => total + review.attributes.score, 0);
+    average = total > 0 ? (parseFloat(total) / parseFloat(reviews.length)) : 0;
     
     userReviews = reviews.map( (review, index) => {
       return (
@@ -113,9 +113,9 @@ const Restaurant = (props) => {
           handleDestroy={handleDestroy}
         />
       )
-    })
+    });
   }
-  console.log(userReviews)
+  
   return(
     <Wrapper>
       { 

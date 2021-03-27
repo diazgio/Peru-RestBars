@@ -60,6 +60,7 @@ GEM
     bindex (0.8.1)
     bootsnap (1.7.3)
       msgpack (~> 1.0)
+    brakeman (5.0.0)
     builder (3.2.4)
     bundler-audit (0.8.0)
       bundler (>= 1.2.0, < 3)
@@ -237,6 +238,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
+  brakeman
   bundler-audit
   byebug
   coffee-rails (~> 4.2)
