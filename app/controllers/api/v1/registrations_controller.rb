@@ -1,6 +1,7 @@
 module Api
   module V1
     class RegistrationsController < ApiController
+      
       def create
         user = User.new(
           email: params[:user][:email],

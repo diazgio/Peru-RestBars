@@ -1,4 +1,4 @@
-restaurants = Restaurant.create([
+Restaurant.create([
   {
     name: 'Restaurant Name',
     image_url: 'https://st.depositphotos.com/2317793/3133/v/600/depositphotos_31331865-stock-illustration-restaurant-logo-fork.jpg'
@@ -22,20 +22,5 @@ restaurants = Restaurant.create([
   {
     name: 'La Casona',
     image_url: 'https://i.pinimg.com/originals/ce/a2/c0/cea2c08ba5780765521be24db8c37a0a.jpg',
-  }
-])
-
-reviews = Review.create([
-  {
-    title: 'Greate place',
-    description: 'I had a lovely time.',
-    score: 5,
-    restaurant: restaurants.first
-  },
-  {
-    title: 'Bad place',
-    description: 'I had a bad time.',
-    score: 1,
-    restaurant: restaurants.first
   }
 ])

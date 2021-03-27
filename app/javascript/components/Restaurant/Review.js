@@ -2,7 +2,7 @@ import React from 'react';
 import Rating from '../Rating/Rating';
 import styled from 'styled-components';
 import { AuthConsumer } from '../AuthContext';
-import Avatar from './Avatar'
+import Avatar from './Avatar';
 
 const Card = styled.div`
   border-radius: 4px;

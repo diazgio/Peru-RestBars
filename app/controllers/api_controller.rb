@@ -1,3 +1,3 @@
 class ApiController < ApplicationController
-  include Authable
+  # include Authable
 end

@@ -1,5 +1,6 @@
 class Restaurant < ApplicationRecord
   has_many :reviews
+  
   validates :name, presence: true, length: { maximum: 255 }
 
   before_create -> (restaurant) do

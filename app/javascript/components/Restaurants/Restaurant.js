@@ -31,7 +31,7 @@ margin: 30px 0 20px 0;
 height: 50px;
 a {
   color: #fff;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   background: #ff0000;
   padding: 10px 50px;
@@ -42,18 +42,18 @@ a {
 }
 `
 
-const Restaurant = (props) => {
+const Restaurant = ({ name, image_url, average_score, slug, ...props }) => {
   return (
     <Card>
       <RestaurantLogo>
-        <img src={props.attributes.image_url} alt={props.attributes.name}/>
+        <img src={image_url} alt={name}/>
       </RestaurantLogo>
       <RestaurantName>
-        {props.attributes.name}
+        {name}
       </RestaurantName>
-      <Rating score={props.attributes.avg_score}/>
+      <Rating score={average_score}/>
       <LinkWrapper>
-        <Link to={`/restaurants/${props.attributes.slug}`}>View Restaruant</Link>
+        <Link to={"/restaurants/" + slug}>View Restaruant</Link>
       </LinkWrapper>
     </Card>
   )

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import axios from 'axios';
 import Header from './Header';
 import ReviewForm from './ReviewForm';
 import Review from './Review';
@@ -39,18 +38,17 @@ const Restaurant = (props) => {
   const [review, setReview] = useState({ title: '', description: '', score: 0 })
   const [error, setError] = useState('')
   const [loaded, setLoaded] = useState(false)
-
+  
   useEffect(() => {
     const slug = props.match.params.slug
-    const url = `/api/v1/restaurants/${slug}`
 
-    AxiosWrapper.get(url)
+    AxiosWrapper.get(`/api/v1/restaurants/${slug}`)
     .then( resp => {
       setRestaurant(resp.data)
       setReviews(resp.data.included)
       setLoaded(true)
     })
-    .catch( resp => console.log(resp) )
+    .catch( data => console.log('Error', data) )
   }, []);
 
   const handleChange = (e) => {
@@ -60,12 +58,12 @@ const Restaurant = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const restaurant_id = parseInt(restaurant.data.id);
+    const restaurant_id = parseInt(restaurant.data.id)
     AxiosWrapper.post('/api/v1/reviews', {...review, restaurant_id})
-    .then(resp => {
-      setReviews([...reviews, resp.data.data]);
-      setReview({ title: '', description: '', score: 0 });
-      setError('');
+    .then((resp) => {
+      setReviews([...reviews, resp.data.data])
+      setReview({ title: '', description: '', score: 0 })
+      setError('')
     })
     .catch( resp => {
       let error
@@ -97,10 +95,10 @@ const Restaurant = (props) => {
   const setRating = (score, e) => {
     e.preventDefault();
     setReview({ ...review, score });
-  };
+  }
 
-  let total, average = 0;
-  let userReviews;
+  let total, average = 0
+  let userReviews
 
   if (reviews && reviews.length > 0) {
     total = reviews.reduce((total, review) => total + review.attributes.score, 0)
@@ -117,7 +115,7 @@ const Restaurant = (props) => {
       )
     })
   }
-
+  console.log(userReviews)
   return(
     <Wrapper>
       { 
@@ -126,7 +124,7 @@ const Restaurant = (props) => {
           <Column>
             <Main>
               <Header 
-                attributes={airline.data.attributes}
+                attributes={restaurant.data.attributes}
                 reviews={reviews}
                 average={average}
               />
@@ -135,7 +133,7 @@ const Restaurant = (props) => {
           </Column>
           <Column>
             <ReviewForm
-              name={airline.data.attributes.name}
+              name={restaurant.data.attributes.name}
               review={review}
               handleChange={handleChange}
               handleSubmit={handleSubmit}
