@@ -38,7 +38,7 @@ const Restaurant = (props) => {
   const [review, setReview] = useState({ title: '', description: '', score: 0 })
   const [error, setError] = useState('')
   const [loaded, setLoaded] = useState(false)
-  console.log(reviews)
+  
   useEffect(() => {
     const slug = props.match.params.slug
 
