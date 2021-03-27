@@ -3,7 +3,7 @@ module Api
     class ReviewsController < ApplicationController
       protect_from_forgery with: :null_session
       def create
-        review = Review.new(review_params)
+        review = restaurant.reviews.new(review_params)
 
         if review.save
           render json: ReviewSerializer.new(review).serialized_json
@@ -20,6 +20,10 @@ module Api
         else
           render json: { error: review.errors.message }, status: 422
         end
+      end
+
+      def restaurant
+        @restaurant ||= Restaurant.find(params[:restaurant_id])
       end
       
       private
