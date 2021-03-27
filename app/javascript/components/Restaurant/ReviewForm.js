@@ -100,6 +100,16 @@ const RatingTitle = styled.div`
   font-weight: bold;
 `
 
+const Error = styled.div`
+  width: 100%;
+  color: rgb(255, 80, 44);
+  border: 1px solid rgb(255, 80, 44);
+  border-radius: 4px;
+  margin-top: 8px;
+  text-align:center;
+  padding: 4px;
+`
+
 const ReviewForm = (props) => {
 
   const ratingOptions = [5,4,3,2,1].map((score, index)=> {
@@ -130,6 +140,10 @@ const ReviewForm = (props) => {
           </RatingContainer>
         </Field>
         <SubmitBtn type="submit">Create Review</SubmitBtn>
+        { 
+          props.error && 
+          <Error>{props.error}</Error>
+        }
       </form>
     </Wrapper>
   )

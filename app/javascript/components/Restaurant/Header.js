@@ -15,26 +15,28 @@ const Wrapper = styled.div`
     margin-right: 20px;
   }
 `
-const TotalReviews = styled.div`
+const UserReviewCount = styled.div`
   font-size: 18px;
   padding: 10px 0;
 `
-const TotalOutOf = styled.div`
+const ScoreOutOf = styled.div`
 font-size: 18px;
 font-weight: bold;
 padding: 10px 0;
 `
 
-const Header = (props) => {
-  const { name, image_url, avg_score } = props.attributes;
-  const total = props.reviews.length
+const Header = ({attributes, reviews, average, ...props}) => {
+  const { image_url, name } = attributes;
+  
   return (
     <Wrapper>
       <h1><img src={image_url} alt={name}/>{name}</h1>
       <div>
-        <TotalReviews>{total} User Reviews</TotalReviews>
-        <Rating score={avg_score}/>
-        <TotalOutOf> {avg_score} out of 5 Stars</TotalOutOf>
+        <UserReviewCount>
+          <span className="review-count">{reviews ? reviews.length : 0}</span> user reviews
+        </UserReviewCount>
+        <Rating score={average}/>
+        <ScoreOutOf>{average.toFixed(1)} out of 5 stars</ScoreOutOf>
       </div>
     </Wrapper>
   )

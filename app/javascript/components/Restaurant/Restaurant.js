@@ -4,6 +4,7 @@ import Header from './Header';
 import ReviewForm from './ReviewForm';
 import Review from './Review';
 import styled from 'styled-components';
+import AxiosWrapper from '../../utils/Requests/AxiosWrapper';
 
 const Wrapper = styled.div`
   margin-left: auto;
@@ -34,81 +35,112 @@ const Main = styled.div`
 
 const Restaurant = (props) => {
   const [restaurant, setRestaurant] = useState({});
-  const [review, setReview] = useState({});
-  const [loaded, setLoaded] = useState(false);
+  const [reviews, setReviews] = useState([])
+  const [review, setReview] = useState({ title: '', description: '', score: 0 })
+  const [error, setError] = useState('')
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     const slug = props.match.params.slug
     const url = `/api/v1/restaurants/${slug}`
 
-    axios.get(url)
+    AxiosWrapper.get(url)
     .then( resp => {
       setRestaurant(resp.data)
+      setReviews(resp.data.included)
       setLoaded(true)
     })
     .catch( resp => console.log(resp) )
   }, []);
 
   const handleChange = (e) => {
-    e.preventDefault();
-
     setReview(Object.assign({}, review, {[e.target.name]: e.target.value}));
-
-    console.log('review:', review);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const csrfToken = document.querySelector('[name=csrf-token]').content;
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken;
-    const restaurant_id = restaurant.data.id;
-    axios.post('/api/v1/reviews', {review, restaurant_id})
+    const restaurant_id = parseInt(restaurant.data.id);
+    AxiosWrapper.post('/api/v1/reviews', {...review, restaurant_id})
     .then(resp => {
-      const included = [...restaurant.included, resp.data.data];
-      setRestaurant({...restaurant, included});
-      setReview({title: '', description: '', score: 0});
+      setReviews([...reviews, resp.data.data]);
+      setReview({ title: '', description: '', score: 0 });
+      setError('');
     })
-    .catch(resp => {})
+    .catch( resp => {
+      let error
+      switch(resp.message){
+        case "Request failed with status code 401":
+          error = 'Please log in to leave a review.'
+          break
+        default:
+          error = 'Something went wrong.'
+      }
+      setError(error)
+    })
   };
+
+  const handleDestroy = (id, e) => {
+    e.preventDefault()
+
+    AxiosWrapper.delete(`/api/v1/reviews/${id}`)
+    .then( (data) => {
+      const included = [...reviews]
+      const index = included.findIndex( (data) => data.id == id )
+      included.splice(index, 1)
+
+      setReviews(included)
+    })
+    .catch( data => console.log('Error', data) )
+  }
 
   const setRating = (score, e) => {
     e.preventDefault();
     setReview({ ...review, score });
   };
-  let reviews;
-  if(loaded && restaurant.included) {
-    reviews = restaurant.included.map( (item, index) => {
+
+  let total, average = 0;
+  let userReviews;
+
+  if (reviews && reviews.length > 0) {
+    total = reviews.reduce((total, review) => total + review.attributes.score, 0)
+    average = total > 0 ? (parseFloat(total) / parseFloat(reviews.length)) : 0
+    
+    userReviews = reviews.map( (review, index) => {
       return (
-        <Review
+        <Review 
           key={index}
-          attributes={item.attributes}
+          id={review.id}
+          attributes={review.attributes}
+          handleDestroy={handleDestroy}
         />
       )
-    });
+    })
   }
 
-  return (
+  return(
     <Wrapper>
       { 
         loaded &&
         <Fragment>
           <Column>
             <Main>
-                <Header
-                  attributes={restaurant.data.attributes}
-                  reviews={restaurant.included}
-                />
-              {reviews}
+              <Header 
+                attributes={airline.data.attributes}
+                reviews={reviews}
+                average={average}
+              />
+              {userReviews}
             </Main>
           </Column>
           <Column>
             <ReviewForm
+              name={airline.data.attributes.name}
+              review={review}
               handleChange={handleChange}
               handleSubmit={handleSubmit}
               setRating={setRating}
-              attributes={restaurant.data.attributes}
-              review={review}
+              error={error}
             />
           </Column>
         </Fragment>
