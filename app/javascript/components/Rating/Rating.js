@@ -5,9 +5,9 @@ const Rating = (props) => {
   const score = (props.score / 5) * 100
 
   return (
-    <span className="star-wrapper">
-      <span className="stars" style={{ width: score + "%" }}></span>
-    </span>
+    <i className="star-wrapper">
+      <i className="stars" style={{ width: score + "%" }}></i>
+    </i>
   )
 }
 
