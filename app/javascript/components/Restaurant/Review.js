@@ -90,9 +90,6 @@ const Review = ({attributes, ...props}) => {
                 <Icon onClick={props.handleDestroy.bind(this, props.id)}>
                   <i className="fa fa-trash"></i>
                 </Icon>
-                <Icon>
-                  <i className="fa fa-pencil"></i>
-                </Icon>
               </Options>
             }
         </Card>
