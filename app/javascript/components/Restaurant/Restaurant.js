@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   margin-left: auto;
   margin-right: auto;
 
-  @media (max-width: 425px) {
+  @media only screen and (max-width: 425px) {
     display: flex;
     flex-direction: column;
   }
@@ -31,6 +31,11 @@ const Column = styled.div`
   &:last-child {
     background: black;
     border-top: 1px solid rgba(255,255,255,0.5);
+  }
+
+  @media only screen and (max-width: 425px) {
+    max-width: 100%;
+    height: 50vh;
   }
 `
 const Main = styled.div`
