@@ -32,10 +32,6 @@ const Column = styled.div`
     background: black;
     border-top: 1px solid rgba(255,255,255,0.5);
   }
-  @media (min-width: 425px) {
-    max-width: 100%;
-    height: 50vh;
-  }
 `
 const Main = styled.div`
   padding-left: 60px;
