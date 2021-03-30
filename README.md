@@ -18,9 +18,6 @@
 - Prepare data architecture documentation;
 - Work with deployment to Heroku.<br>
 
-## 🔴 Live Demo
-
-[Live Demo Link](https://fathomless-escarpment-25657.herokuapp.com/)
 
 ## 🛠 Built With
 
